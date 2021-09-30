@@ -3,7 +3,7 @@ from .models import Nurse
 
 # Register your models here.
 class NurseAdmin(admin.ModelAdmin):
-    list_display = ('name', )
+    list_display = ('name',)
 
 
 admin.site.register(Nurse)
