@@ -1,5 +1,5 @@
 from django import forms
-from .models import Nurse
+from .models import Nurse, Team
 
 class NurseForm(forms.ModelForm):
 

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <header>
+    <p class="display-5">Detail Page</p>
+    <hr>
+  </header>
+
+  <section>
+    <p class="fs-3">Hi! {{ user }}</p>
+    <p>OFF Days Picked: {{ nurse.off_choices }}</p>
+    <p>Your Duty: {{ nurse.duties }}</p>
+  </section>
+
+  <footer>
+    <p><a class='text-decoration-none' href="{% url 'duties:index' %}">Back</a></p>
+  </footer>
+{% endblock content %}
