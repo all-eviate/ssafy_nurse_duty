@@ -10,8 +10,8 @@ class Nurse(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-    off_choices = models.JSONField()
-    duties = models.JSONField()
+    off_choices = models.JSONField(blank=True, null=True,)
+    duties = models.JSONField(blank=True, null=True,)
 
 
 class Team(models.Model):

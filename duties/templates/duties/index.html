@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <p class="display-5">James</p>
+  <header>
+    <p class="display-5">Index Page</p>
+    <hr>
+  </header>
+
+  <section>
+    <p><a class='text-decoration-none' href="{% url 'accounts:signup' %}">Sign Up</a></p>
+
+    {% if request.user.is_authenticated %}
+      <p><a class='text-decoration-none' href="{% url 'accounts:login' %}">Log Out</a></p>
+    {% else %}
+      <p><a class='text-decoration-none' href="{% url 'accounts:login' %}">Log In</a></p>
+    {% endif %}
+    
+    <p><a class='text-decoration-none' href="{% url 'accounts:signup' %}">Pick Off Days</a></p>
+  </section>
 {% endblock content %}
