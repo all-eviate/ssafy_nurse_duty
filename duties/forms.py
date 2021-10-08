@@ -5,5 +5,5 @@ class NurseForm(forms.ModelForm):
 
     class Meta:
         model = Nurse
-        fields = '__all__'
+        fields = ('choices',)
         
