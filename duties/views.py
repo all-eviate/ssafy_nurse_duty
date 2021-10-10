@@ -144,3 +144,4 @@ def generateDuty(request, pk):
     else:
         pass
         # off_requests를 받는 Form을 html로 보냄
+
