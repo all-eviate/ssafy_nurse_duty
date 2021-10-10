@@ -1,11 +1,43 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
-from .models import Nurse
+from django.contrib.auth.decorators import login_required
+from .models import Nurse, Team
 from .forms import NurseForm
 import statistics
 import datetime
+import holidays
 
-## 알고리즘
+"""
+알고리즘
+"""
+# 년, 월을 입력받아 공휴일정보 반환
+def holyday_get(year, month):
+    holidays_kr = holidays.KR()
+    holyday_list = []
+    for day in range(1, 32):
+        check_day = str(month) + '/' + str(day) + '/' + str(year)
+        try: # 31일까지 없는 달도 계산 수행 위함
+            if check_day in holidays_kr:
+                holyday_list.append(day)
+        except:
+            continue
+    return holyday_list
+
+# 년, 월을 입받아 시작요일, 마지막날짜 반환
+def calendar_get(year, month):
+    # 시작 요일 계산
+    w = datetime.date(year, month, 1).weekday()
+
+    # 마지막 날짜 계산
+    m = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
+        m[2] = 29
+
+    return (w, m[month]) # 리턴타입은 요일 숫자, 마지막 일
+    # 0: 월요일 ~ 6: 일요일 (python 기본 방식이라고 함)
+
+
+
 duties = set() # 근무표의 리스트를 중복제거를 위해 집합으로 선언
 last_duty = ['O', 'D', 'E', 'N'] # 지난달 마지막 주 근무표를 받아와야 함
 duty = ['P'] # 인덱스를 맞추기 위해 [P]adding을 붙여둠
@@ -13,7 +45,7 @@ sample = [10, 7, 7, 7] # 표준편차 계산을 위한 샘플 데이터셋 (수�
 std = statistics.stdev(sample) # 표준편차 값
 recovery = 0 # 이번 달 recovery off의 지급 여부
 offs = [1, 13, 15, 26] # off 요청의 예시
-holidays = [] # 주말 이외의 공휴일 데이터셋 // 이부분은 어떻게 API나 그런걸 쓰면서 받아와야 할 듯
+holiday = [] # 주말 이외의 공휴일 데이터셋 // 이부분은 어떻게 API나 그런걸 쓰면서 받아와야 할 듯
 
 def dfs(date, month, age, yoil): 
     global duty
@@ -33,7 +65,7 @@ def dfs(date, month, age, yoil):
             duties.add(''.join(duty[1:month + 1]))
         return
 
-    if yoil == 5 or yoil == 6 or date in holidays: # 오늘이 휴일이면 누적 오프 증가
+    if yoil == 5 or yoil == 6 or date in holiday: # 오늘이 휴일이면 누적 오프 증가
         missed_off += 1
 
     # 오프 받고 싶은 날
@@ -119,11 +151,28 @@ def dfs(date, month, age, yoil):
         summary[nextduty] -= 1
         duty.pop() # -= nextduty
 
+"""
+페이지 관리
+"""
 
-## 페이지 관리
+@login_required
+@require_safe
 def index(request):
-    return render(request, 'duties/index.html')
+    # Team 정보를 불러온다
+    now_year = datetime.date.today().year
+    now_month = datetime.date.today().month
+    start_day, closing_day = calendar_get(now_year, now_month)
 
+
+    # index에 달력 만들도록 정보를 넘긴다
+    content = {
+        'start_day': start_day, # 1일의 요일
+        'closing_day': closing_day, # 마지막 날짜
+    }
+    return render(request, 'duties/index.html', content)
+
+@login_required
+@require_http_methods(["GET", "POST"])
 def select(request):
     if request.method == 'POST':
         form = NurseForm(request.POST)
@@ -137,8 +186,10 @@ def select(request):
     }
     return render(request, 'duties/select.html', context)
 
-
+@login_required
+@require_safe
 def detail(request, pk):
+<<<<<<< HEAD
     # 알맞은 접근인지 인증합니다 (요청 확인)
 
     # GET으로 들어올때
@@ -146,9 +197,15 @@ def detail(request, pk):
         pass
         # off_requests를 받는 Form을 html로 보냄
 
+=======
+>>>>>>> 211ec0b000014597cf2d93e2497d214137e1e7fe
     # 모델로부터 간호사의 근무 조건을 받습니다
     nurse = Nurse.objects.get(pk=pk)
     context = {
         'nurse': nurse,
     }
     return render(request, 'duties/detail.html', context)
+<<<<<<< HEAD
+=======
+        pass
+>>>>>>> 211ec0b000014597cf2d93e2497d214137e1e7fe
