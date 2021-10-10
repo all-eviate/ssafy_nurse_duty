@@ -179,7 +179,6 @@ def select(request):
             form.save()
             return redirect('duties:index')
     else:
-<<<<<<< HEAD
         form = NurseForm()
     context = {
         'form': form,
@@ -195,8 +194,4 @@ def detail(request, pk):
         'nurse': nurse,
     }
     return render(request, 'duties/detail.html', context)
-=======
         pass
-        # off_requests를 받는 Form을 html로 보냄
-
->>>>>>> d3863c4e299f356a77a4d7179e2f6a4fc1776540
