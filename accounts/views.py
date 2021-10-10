@@ -21,7 +21,7 @@ def signup(request):
 
     if request.method == "POST":
         form = UserCreationForm(request.POST) # 추후 맞춤(Model)
-        if form.is_vaild():
+        if form.is_valid():
             user = form.save()
             auth_login(request, user)
             return redirect('duties:index') # 추후 맞춤(html)
@@ -72,7 +72,7 @@ def logout(request):
 def update(request):
     if request.method == "POST":
         form = UserChangeForm(request.POST, instance=request.user) # 추후 맞춤(Model)
-        if form.is_vaild():
+        if form.is_valid():
             form.save()
             return redirect('duties:index')
     else:

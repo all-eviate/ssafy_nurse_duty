@@ -15,7 +15,7 @@ class Nurse(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        primary_key=True,
+        primary_key=True
     )
     choices = models.JSONField()
     duties = models.JSONField(blank=True, null=True)
