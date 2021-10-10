@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <p class="display-5">James</p>
+  <header>
+    <p class="display-5">Index Page</p>
+    <hr>
+  </header>
+
+  <section>
+    <p><a class='text-decoration-none' href="{% url 'accounts:signup' %}">Sign Up</a></p>
+
+    {% if request.user.is_authenticated %}
+    <p>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-outline-danger" type="submit">Log Out</button>
+      </form>
+    </p>
+    {% else %}
+      <p><a class='text-decoration-none' href="{% url 'accounts:login' %}">Log In</a></p>
+    {% endif %}
+
+    <p><a class='text-decoration-none' href="{% url 'duties:select' %}">Pick Off Days</a></p>
+  </section>
 {% endblock content %}

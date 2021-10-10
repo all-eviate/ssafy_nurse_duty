@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <header>
+    <p class="fs-3">login</p>
+    <hr>
+  </header>
+  
+  <section>
+    <form action="{% url 'accounts:login' %}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit">
+    </form>
+  </section>
+{% endblock content %}
