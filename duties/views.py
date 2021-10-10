@@ -189,23 +189,10 @@ def select(request):
 @login_required
 @require_safe
 def detail(request, pk):
-<<<<<<< HEAD
-    # 알맞은 접근인지 인증합니다 (요청 확인)
-
-    # GET으로 들어올때
-    else:
-        pass
-        # off_requests를 받는 Form을 html로 보냄
-
-=======
->>>>>>> 211ec0b000014597cf2d93e2497d214137e1e7fe
     # 모델로부터 간호사의 근무 조건을 받습니다
     nurse = Nurse.objects.get(pk=pk)
     context = {
         'nurse': nurse,
     }
     return render(request, 'duties/detail.html', context)
-<<<<<<< HEAD
-=======
         pass
->>>>>>> 211ec0b000014597cf2d93e2497d214137e1e7fe
