@@ -3,6 +3,8 @@ from django.views.decorators.http import require_http_methods, require_POST, req
 from django.contrib.auth.decorators import login_required
 from .models import Nurse, Team
 from .forms import NurseForm
+import statistics
+import datetime
 
 import statistics
 import datetime
@@ -36,8 +38,6 @@ def calendar_get(year, month):
 
     return (w, m[month]) # 리턴타입은 요일 숫자, 마지막 일
     # 0: 월요일 ~ 6: 일요일 (python 기본 방식이라고 함)
-
-
 
 
 
@@ -179,6 +179,7 @@ def select(request):
             form.save()
             return redirect('duties:index')
     else:
+<<<<<<< HEAD
         form = NurseForm()
     context = {
         'form': form,
@@ -194,3 +195,8 @@ def detail(request, pk):
         'nurse': nurse,
     }
     return render(request, 'duties/detail.html', context)
+=======
+        pass
+        # off_requests를 받는 Form을 html로 보냄
+
+>>>>>>> d3863c4e299f356a77a4d7179e2f6a4fc1776540
