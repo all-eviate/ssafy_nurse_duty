@@ -66,7 +66,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    user_id = models.EmailField(max_length=100, primary_key=True)
+    user_id = models.EmailField(max_length=100, unique=True)
     name = models.CharField(max_length=50)
     age = models.DateField()
     photo = models.ImageField(upload_to='user_info_photos/', blank=True)
