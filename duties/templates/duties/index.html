@@ -3,11 +3,13 @@
 {% block content %}
   <header>
     <p class="display-5">Index Page</p>
+    <p>{{ user }}</p>
+    <img src="{{ user.photo.url }}" alt="userimage">
+    <p><a href="{% url 'duties:index' %}">main</a></p>
     <hr>
   </header>
 
   <section>
-    <p><a class='text-decoration-none' href="{% url 'accounts:signup' %}">Sign Up</a></p>
 
     {% if request.user.is_authenticated %}
     <p>
@@ -15,11 +17,21 @@
         {% csrf_token %}
         <button class="btn btn-outline-danger" type="submit">Log Out</button>
       </form>
+      <form action="{% url 'accounts:delete' %}" method='POST'>
+        {% csrf_token %}
+        <button class="btn btn-outline-danger" type="submit">탈퇴</button>
+      </form>
+
+      <p><a class='text-decoration-none' href="{% url 'duties:select' %}">Pick Off Days</a></p>
+      <p><a href="{% url 'accounts:update' %}">회원정보 수정</a></p>
+      <p><a href="{% url 'accounts:change_password' %}">비밀번호 수정</a></p>
+      <p><a href="">My duty</a></p>
+
     </p>
     {% else %}
+      <p><a class='text-decoration-none' href="{% url 'accounts:signup' %}">Sign Up</a></p>
       <p><a class='text-decoration-none' href="{% url 'accounts:login' %}">Log In</a></p>
     {% endif %}
 
-    <p><a class='text-decoration-none' href="{% url 'duties:select' %}">Pick Off Days</a></p>
   </section>
 {% endblock content %}

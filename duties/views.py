@@ -141,3 +141,6 @@ def detail(request, pk):
         'nurse': nurse,
     }
     return render(request, 'duties/detail.html', context)
+
+def dutylist(request):
+    return render(request, 'duties/dutylist.html')
