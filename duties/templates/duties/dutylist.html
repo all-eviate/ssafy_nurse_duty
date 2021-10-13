@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <header>
+    <p class="fs-3">Dutylist</p>
+    <hr>
+  </header>
+  <form action="" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value='pick'>
+  </form>
+
+{% endblock content %}
