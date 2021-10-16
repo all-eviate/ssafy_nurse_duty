@@ -151,6 +151,40 @@ def dfs(date, month, age, yoil):
         summary[nextduty] -= 1
         duty.pop() # -= nextduty
 
+
+"""
+회의 전까지 임시로 빼두겠습니다. 
+뺐을때 장점: 기능별로 좀더 세분화 가능하다. 가독성이 좋다.(불확실)
+            알고리즘 담당자가 try-error 하기 편하다.
+       단점: 지저분하고 한번에 코드 기능을 알기 어려울 수 있다. 
+"""
+# select 함수(off_request 받아옴)뒤에서 사용
+# 사용자의 pk를 받음. DB Nurse/duties에 dfs 결과 저장 
+def off_request_save(pk):
+    # off_request 불러오기
+    now_month = str(datetime.date.today().month) + '월'
+    nurse = Nurse.objects.get(pk=pk)
+    nurse_choice = nurse.choices.get(now_month)
+
+    off_request = []
+    for day, flag in nurse_choice.items():
+        if flag: # True값이면
+            off_request.append(day)
+
+    # 알고리즘 수행
+    # result_duty_raw = function_dfs(off_request, ~~, ~~)
+    result_duty_raw = ['112134231243', # 나중에 위에 주석과 교환
+                       '112134231244',
+                       '112134231245',]
+    
+    if nurse.duties == None: # 초기에 비어있으면
+        nurse_duties = {now_month: result_duty_raw} # 저장
+        nurse.save()
+    else: # 일반적인 경우
+        nurse_duties[now_month] = result_duty_raw
+        nurse.save()
+    return 
+
 """
 페이지 관리
 """
@@ -162,8 +196,6 @@ def index(request):
     now_year = datetime.date.today().year
     now_month = datetime.date.today().month
     start_day, closing_day = calendar_get(now_year, now_month)
-
-
     # index에 달력 만들도록 정보를 넘긴다
     content = {
         'start_day': start_day, # 1일의 요일
