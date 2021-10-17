@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from .models import Nurse
-from .forms import NurseForm
+from .forms import NurseForm, SelectMonth
 import statistics
 import datetime
 
@@ -118,19 +118,31 @@ def dfs(date, month, age, yoil):
 def index(request):
     return render(request, 'duties/index.html')
 
-def select(request):
-    if request.method == 'POST':
-        form = NurseForm(request.POST)
-        if form.is_valid(): # 추후 유효성 추가 (선착순 등)
-            form.save()
-            return redirect('duties:index')
-    else:
-        form = NurseForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'duties/select.html', context)
+# 몇 월인지 고르기
+# def selectmonth(request):
+#     if request.method == 'POST':
+#         form = SelectMonth(request.POST)
+#         return redirect('duties:pickoff')
+#     else:
+#         form = SelectMonth()
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'duties/select_month.html', context)
 
+# 오프 데이 고르기
+# def pickoff(request):
+#     if request.method =='POST':
+#         offdays = [
+#             {'day1': 'True'}
+#         ]
+#     else:
+#         pass
+#     n = 31
+#     context = {
+#         'n': n,
+#     }
+#     return render(request, 'duties/pickoff.html', context)
 
 def detail(request, pk):
     # 알맞은 접근인지 인증합니다 (요청 확인)
@@ -143,4 +155,5 @@ def detail(request, pk):
     return render(request, 'duties/detail.html', context)
 
 def dutylist(request):
+
     return render(request, 'duties/dutylist.html')

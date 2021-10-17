@@ -5,8 +5,14 @@
 <hr>
 <form action="" method="POST">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form1.as_p }}
   <input type="submit" value="update">
+</form><br>
+<h1>비밀번호 수정</h1>
+<hr>
+<form action="" method='POST'>
+  {% csrf_token %}
+  {{ form2.as_p }}
 </form>
 <a href="{% url 'duties:index' %}">main</a>
 

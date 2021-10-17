@@ -69,29 +69,30 @@ def logout(request):
         auth_logout(request)
     return redirect('duties:index') # 추후 맞춤(html)
 
-# 회원정보 수정
+# 프로필
 @login_required
-@require_http_methods(['GET', 'POST'])
-def update(request):
-    if request.method == "POST":
-        form = UserChangeForm(request.POST, instance=request.user) # 추후 맞춤(Model)
-        if form.is_valid():
-            form.save()
-            return redirect('duties:index')
-    else:
-        form = UserChangeForm(instance=request.user) # 추후 맞춤(Model)
+def profile(request, emp_id):
+    user = User.objects.get(emp_id=emp_id)
     context = {
-        'form': form,
+        'user': user,
     }
-    return render(request, 'accounts/update.html', context)
+    return render(request, 'accounts/profile.html', context)
 
+# 회원정보 수정
 # @login_required
-# def profile(request, pk):
-#     user = User.objects.get(pk=pk)
+# @require_http_methods(['GET', 'POST'])
+# def update(request):
+#     if request.method == "POST":
+#         form = UserChangeForm(request.POST, instance=request.user) # 추후 맞춤(Model)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('duties:index')
+#     else:
+#         form = UserChangeForm(instance=request.user) # 추후 맞춤(Model)
 #     context = {
-#         'user': user,
+#         'form': form,
 #     }
-#     return render(request, 'accounts/profile.html', context)
+#     return render(request, 'accounts/update.html', context)
 
 # 비밀정보 수정
 @login_required
@@ -109,3 +110,23 @@ def change_password(request):
         'form': form,
     }
     return render(request, 'accounts/change_password.html', context)
+
+# 회원정보 수정 페이지랑 비밀번호 수정 페이지 합친것
+@login_required
+@require_http_methods(['GET', 'POST'])
+def update(request):
+    if request.method == "POST":
+        form1 = UserChangeForm(request.POST, instance=request.user) # 추후 맞춤(Model)
+        form2 = PasswordChangeForm(request.user)
+        if form1.is_valid() and form2.is_valid():
+            form1.save()
+            form2.save()
+            return redirect('duties:index')
+    else:
+        form1 = UserChangeForm(instance=request.user) # 추후 맞춤(Model)
+        form2 = PasswordChangeForm(request.user)
+    context = {
+        'form1': form1,
+        'form2' : form2,
+    }
+    return render(request, 'accounts/update.html', context)

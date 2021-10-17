@@ -17,6 +17,7 @@ class Nurse(models.Model):
         on_delete=models.CASCADE,
         primary_key=True
     )
+    month = models.IntegerField(default=0)
     choices = models.JSONField()
     duties = models.JSONField(blank=True, null=True)
 
