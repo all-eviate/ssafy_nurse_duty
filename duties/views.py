@@ -6,6 +6,7 @@ from .forms import NurseForm
 import statistics
 import datetime
 import holidays
+import random
 
 """
 알고리즘
@@ -125,7 +126,8 @@ def dfs(date, month, age, yoil):
                         NEXT = ['D', 'E', 'O']
                         if missed_off > 0:
                             NEXT = ['O', 'D', 'E']
-    for nextduty in NEXT:
+    for _ in NEXT:
+        nextduty = random.sample(NEXT)
         if nextduty in ['D', 'E', 'N'] and summary[nextduty] == 7:
             continue
         if date >= 4 and nextduty == duty[date-1] == duty[date-2] == duty[date-3]:
