@@ -2,7 +2,14 @@
 
 {% block content %}
   <header>
-    <p class="fs-3">login</p>
+    <p class="display-6 text-center">Login Page</p>
+
+    <div class="d-flex justify-content-end">
+      {% if request.user.is_authenticated %}
+      {% else %}
+        <p><a class="btn btn-outline-success mx-2" href="{% url 'accounts:signup' %}" role="button">회원 가입</a></P>
+      {% endif %}
+    </div>
     <hr>
   </header>
   
@@ -10,7 +17,9 @@
     <form action="{% url 'accounts:login' %}" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-primary ms-2" type="submit">확인</button>
+      </div>
     </form>
   </section>
 {% endblock content %}

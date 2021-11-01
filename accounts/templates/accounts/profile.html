@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <header>
+    <p class="display-6 text-center">Profile Page</p>
+    <hr>
+  </header>
+
+  <section>
+    <div class="mb-5">
+      <p>기본 정보</p>
+      <ul>
+        <li>Username: {{ user.username }}</li>
+        <li>Name: {{ user.name }}</li>
+        <li>Birthday: {{ user.age }}</li>
+        <li>Photo:</li>
+      </ul>
+    </div>
+
+    <div>
+      <p>인사 정보</p>
+      <ul>
+        <li>Employment ID: {{ user.emp_id }}</li>
+        <li>Employment Date: {{ user.emp_date }}</li>
+        <li>Role: {{ user.emp_grade }}</li>
+        <li>Team: {{ user.emp_team }}</li>
+      </ul>
+    </div>
+    <hr>
+  </section>
+
+  <footer class="d-flex justify-content-end">
+    <a class="btn btn-outline-success mx-2" href="{% url 'duties:index' %}" role="button">BACK</a>
+  </footer>
+{% endblock content %}

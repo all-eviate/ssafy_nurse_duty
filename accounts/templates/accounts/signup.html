@@ -2,15 +2,18 @@
 
 {% block content %}
   <header>
-    <p class="fs-3">Sign Up</p>
+    <p class="display-6 text-center">Signup Page</p>
     <hr>
   </header>
-  
-  <section>
-    <form action="{% url 'accounts:signup' %}" method="POST" enctype="multipart/form-data">
+
+  <section class="mb-5">
+    <form action="{% url 'accounts:signup' %}" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit">
+      <div class="d-flex justify-content-end">
+        <a class="btn btn-outline-success mx-2" href="{% url 'duties:index' %}" role="button">BACK</a>
+        <button class="btn btn-outline-primary ms-2" type="submit">확인</button>
+      </div>
     </form>
   </section>
 {% endblock content %}

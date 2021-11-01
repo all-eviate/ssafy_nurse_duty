@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>회원정보 수정</h1>
-<hr>
-<form action="" method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="update">
-</form>
-<a href="{% url 'duties:index' %}">main</a>
-
+  <header>
+    <p class="display-6 text-center">Accounts Update Page</p>
+    <hr>
+  </header>
+  
+  <section>
+    <form action="{% url 'accounts:update' %}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="d-flex justify-content-end">
+        <a class="btn btn-outline-success mx-2" href="{% url 'duties:index' %}" role="button">BACK</a>
+        <button class="btn btn-outline-primary ms-2" type="submit">확인</button>
+      </div>
+    </form>
+  </section>
 {% endblock content %}
