@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
-from .models import Nurse, Team
-from .forms import NurseForm
 import statistics
 import datetime
 import holidays
