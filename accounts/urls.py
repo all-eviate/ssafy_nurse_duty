@@ -3,13 +3,11 @@ from . import views
 
 app_name = 'accounts'
 urlpatterns = [
-    path('signup/', views.signup, name='signup'),  # 회원 가입
-    path('delete/', views.delete, name='delete'),  # 회원 탈퇴
-    path('update/', views.update, name='update'),  # 회원정보 수정
-    path('password/', views.change_password, name='change_password'),  # 비밀번호 수정
-    path('login/', views.login, name='login'),  # 로그인
-    path('logout/', views.logout, name='logout'),  # 로그아웃
-    path('<int:pk>/', views.profile, name='profile'),  # 프로필
-
-    path('test/', views.test, name='test'),  # 테스트
+    path('signup/', views.signup, name='signup'), # 회원가입
+    path('delete', views.delete, name='delete'), # 회원탈퇴
+    path('login/', views.login, name='login'), # 로그인
+    path('logout/', views.logout, name='logout'), # 로그아웃
+    path('update/', views.update, name='update'), # 회원정보수정
+    path('<int:emp_id>', views.profile, name='profile'), # 프로필
+    path('change_password/', views.change_password, name='change_password'),  # 비밀번호수정
 ]

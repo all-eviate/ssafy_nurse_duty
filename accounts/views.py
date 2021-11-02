@@ -1,34 +1,42 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_POST, require_http_methods, require_safe
-from django.contrib.auth import (
-    login as auth_login, logout as auth_logout,
-    get_user_model, update_session_auth_hash
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import (
+    AuthenticationForm, 
+    PasswordChangeForm,
 )
+from .forms import (
+    UserCreationForm,
+    UserChangeForm,
+)
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import update_session_auth_hash
+from django.views.decorators.http import require_POST, require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import User
 
-# SIGN UP: 회원가입
+# Create your views here.
+
+# Create (회원가입)
 @require_http_methods(['GET', 'POST'])
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('duties:index')
+        return redirect('duties:index') # 추후 맞춤(html)
 
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, request.FILES)
+    if request.method == "POST":
+        form = UserCreationForm(request.POST, request.FILES) # 추후 맞춤(Model)
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect('duties:index')
+            return redirect('duties:index') # 추후 맞춤(html)
     else:
-        form = CustomUserCreationForm()
+        form = UserCreationForm() # 추후 맞춤(Model)
     context = {
         'form': form,
     }
     return render(request, 'accounts/signup.html', context)
 
 
-# DELETE: 회원 탈퇴
+# Delete (회원탈퇴)
 @require_POST
 def delete(request):
     if request.user.is_authenticated:
@@ -36,25 +44,57 @@ def delete(request):
         auth_logout(request) 
     return redirect('duties:index')
 
-
-# UPDATE: 회원정보 수정
-@login_required
+# Login (로그인)
 @require_http_methods(['GET', 'POST'])
-def update(request):
-    if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('duties:index') # 추후 맞춤(html)
+
+    if request.method == "POST":
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('duties:index')
+            auth_login(request, form.get_user())
+            return redirect(request.GET.get('next') or 'duties:index') # 추후 맞춤(html)
     else:
-        form = CustomUserChangeForm(instance=request.user)
+        form = AuthenticationForm()
     context = {
         'form': form,
     }
-    return render(request, 'accounts/update.html', context)
+    return render(request, 'accounts/login.html', context)
 
+# Logout (로그아웃)
+@require_POST
+def logout(request):
+    if request.user.is_authenticated:
+        auth_logout(request)
+    return redirect('duties:index') # 추후 맞춤(html)
 
-# PASSWORD: 비밀번호 수정
+# 프로필
+@login_required
+def profile(request, emp_id):
+    user = User.objects.get(emp_id=emp_id)
+    context = {
+        'user': user,
+    }
+    return render(request, 'accounts/profile.html', context)
+
+# 회원정보 수정
+# @login_required
+# @require_http_methods(['GET', 'POST'])
+# def update(request):
+#     if request.method == "POST":
+#         form = UserChangeForm(request.POST, instance=request.user) # 추후 맞춤(Model)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('duties:index')
+#     else:
+#         form = UserChangeForm(instance=request.user) # 추후 맞춤(Model)
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'accounts/update.html', context)
+
+# 비밀정보 수정
 @login_required
 @require_http_methods(['GET', 'POST'])
 def change_password(request):
@@ -71,45 +111,22 @@ def change_password(request):
     }
     return render(request, 'accounts/change_password.html', context)
 
-
-# LOGIN: 로그인
-@require_http_methods(['GET', 'POST'])
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('duties:index')
-
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'duties:index')
-    else:
-        form = AuthenticationForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/login.html', context)
-
-
-# LOGOUT: 로그아웃
-@require_POST
-def logout(request):
-    if request.user.is_authenticated:
-        auth_logout(request)
-    return redirect('duties:index')
-
-
-# PROFILE: 프로필
+# 회원정보 수정 페이지랑 비밀번호 수정 페이지 합친것
 @login_required
-@require_safe
-def profile(request, pk):
-    worker = get_object_or_404(get_user_model(), pk=pk)
+@require_http_methods(['GET', 'POST'])
+def update(request):
+    if request.method == "POST":
+        form1 = UserChangeForm(request.POST, instance=request.user) # 추후 맞춤(Model)
+        form2 = PasswordChangeForm(request.user)
+        if form1.is_valid() and form2.is_valid():
+            form1.save()
+            form2.save()
+            return redirect('duties:index')
+    else:
+        form1 = UserChangeForm(instance=request.user) # 추후 맞춤(Model)
+        form2 = PasswordChangeForm(request.user)
     context = {
-        'worker': worker,
+        'form1': form1,
+        'form2' : form2,
     }
-    return render(request, 'accounts/profile.html', context)
-
-
-# test
-def test(request):
-    return render(request, 'accounts/test.html')
+    return render(request, 'accounts/update.html', context)

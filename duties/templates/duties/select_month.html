@@ -2,15 +2,20 @@
 
 {% block content %}
   <header>
-    <p class="fs-3">Pick Off Days</p>
+    <p class="fs-3">Select Month</p>
     <hr>
   </header>
   
   <section>
-    <form action="{% url 'duties:select' %}" method="POST">
+    <form action="{% url 'duties:selectmonth' %}" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
       <button class="btn btn-outline-success" type="submit">Pick</button>
-    </form>
+    </form><br>
   </section>
+
+
+
+  </div>
+
 {% endblock content %}

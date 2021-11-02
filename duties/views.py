@@ -203,6 +203,7 @@ def index(request):
     }
     return render(request, 'duties/index.html', content)
 
+<<<<<<< HEAD
 @login_required
 @require_http_methods(["GET", "POST"])
 def select(request):
@@ -220,6 +221,34 @@ def select(request):
 
 @login_required
 @require_safe
+=======
+# 몇 월인지 고르기
+# def selectmonth(request):
+#     if request.method == 'POST':
+#         form = SelectMonth(request.POST)
+#         return redirect('duties:pickoff')
+#     else:
+#         form = SelectMonth()
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, 'duties/select_month.html', context)
+
+# 오프 데이 고르기
+# def pickoff(request):
+#     if request.method =='POST':
+#         offdays = [
+#             {'day1': 'True'}
+#         ]
+#     else:
+#         pass
+#     n = 31
+#     context = {
+#         'n': n,
+#     }
+#     return render(request, 'duties/pickoff.html', context)
+
+>>>>>>> templates
 def detail(request, pk):
     # 모델로부터 간호사의 근무 조건을 받습니다
     nurse = Nurse.objects.get(pk=pk)
@@ -229,4 +258,9 @@ def detail(request, pk):
     return render(request, 'duties/detail.html', context)
 
 def dutylist(request):
+<<<<<<< HEAD
     return render(request, 'duties/dutylist.html')
+=======
+
+    return render(request, 'duties/dutylist.html')
+>>>>>>> templates
