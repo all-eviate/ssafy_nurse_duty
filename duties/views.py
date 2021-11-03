@@ -3,7 +3,7 @@ from django.views.decorators.http import require_http_methods, require_POST, req
 from django.contrib.auth.decorators import login_required
 from .models import Nurse, Team
 from .forms import NurseForm
-from schedule_maker import make_monthly_schedule
+from .schedule_maker import make_monthly_schedule
 import statistics
 import datetime
 import holidays
@@ -55,16 +55,18 @@ example_nurse_info = {
     # 13: [13, 0, 0, 0, 0, 0, 2, 0]
 }
 
-def test():
+def test(request):
     nurses_list = Nurse.objects.all()
     result, modified_nurse_info = make_monthly_schedule(
     team_list=[1],
     nurses_list=nurses_list,
     nurse_info=example_nurse_info,
     needed_nurses_shift_by_team=1,
-    vacation_info=[],
+    # vacation_info=[],
     current_month=10,
-    current_date=1,    
+    current_date=1,
+    dates=31,
+    start_day_of_this_month=0
     )
     print('디버깅용 딕셔너리')
     pprint(modified_nurse_info)
@@ -74,7 +76,9 @@ def test():
     for nurse in nurses_list:
         print(nurse.pk, result[nurse.pk])
 
-test()
+    return render(request, 'duties/index.html')
+
+# test()
 
 # duties = set() # 근무표의 리스트를 중복제거를 위해 집합으로 선언
 # last_duty = ['O', 'D', 'E', 'N'] # 지난달 마지막 주 근무표를 받아와야 함

@@ -15,7 +15,8 @@ def make_daily_schedule(
     nurses_list,
     nurse_info,
     ideal_schedule, 
-    current_date
+    current_date,
+    yoil
     ):
     """
     매개 변수 : 

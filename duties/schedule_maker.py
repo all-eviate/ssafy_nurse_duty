@@ -1,4 +1,4 @@
-from schedule_maker_module import (
+from .schedule_maker_module import (
     make_daily_schedule,
     make_ideal_counter,
     update_nurse_info,
@@ -124,42 +124,44 @@ def make_monthly_schedule(
 9 LAST_SHIFT,           마지막 근무 정보
 """
 
-example_nurse_info = {
-    1: [1, 0, 1, 0, 0, 0, 0, 0, 2, 0],
-    2: [2, 1, 1, 0, 0, 0, 0, 0, 2, 0],
-    3: [3, 2, 1, 0, 0, 0, 0, 0, 2, 0],
-    4: [4, 0, 1, 0, 0, 0, 0, 0, 2, 0],
-    5: [5, 1, 1, 0, 0, 0, 0, 0, 2, 0],
-    6: [6, 2, 1, 0, 0, 0, 0, 0, 2, 0],
-    # 7: [7, 0, 0, 0, 0, 0, 2, 0],
-    # 8: [8, 0, 0, 0, 0, 0, 2, 0],
-    # 9: [9, 0, 0, 0, 0, 0, 0, 0],
-    # 10:[10, 0, 0, 0, 0, 0, 2, 0],
-    # 11: [11, 0, 0, 0, 0, 0, 2, 0],
-    # 12: [12, 0, 0, 0, 0, 0, 2, 0],
-    # 13: [13, 0, 0, 0, 0, 0, 2, 0]
-}
+# example_nurse_info = {
+#     1: [1, 0, 1, 0, 0, 0, 0, 0, 2, 0],
+#     2: [2, 1, 1, 0, 0, 0, 0, 0, 2, 0],
+#     3: [3, 2, 1, 0, 0, 0, 0, 0, 2, 0],
+#     4: [4, 0, 1, 0, 0, 0, 0, 0, 2, 0],
+#     5: [5, 1, 1, 0, 0, 0, 0, 0, 2, 0],
+#     6: [6, 2, 1, 0, 0, 0, 0, 0, 2, 0],
+#     # 7: [7, 0, 0, 0, 0, 0, 2, 0],
+#     # 8: [8, 0, 0, 0, 0, 0, 2, 0],
+#     # 9: [9, 0, 0, 0, 0, 0, 0, 0],
+#     # 10:[10, 0, 0, 0, 0, 0, 2, 0],
+#     # 11: [11, 0, 0, 0, 0, 0, 2, 0],
+#     # 12: [12, 0, 0, 0, 0, 0, 2, 0],
+#     # 13: [13, 0, 0, 0, 0, 0, 2, 0]
+# }
 
-example_nurse_pk_list = [1, 2, 3, 4, 5, 6] #  7, 8, 9, 10, 11, 12, 13
+# example_nurse_pk_list = [1, 2, 3, 4, 5, 6] #  7, 8, 9, 10, 11, 12, 13
 
-start_time = time.time()
-result, modified_nurse_info = make_monthly_schedule(
-    team_list=[1],
-    nurse_pk_list=example_nurse_pk_list,
-    nurse_info=example_nurse_info,
-    needed_nurses_shift_by_team=1,
-    vacation_info=[],
-    current_month=10,
-    current_date=1,    
-    )
-print('디버깅용 딕셔너리')
-pprint(modified_nurse_info)
-print()
-i = 1
+# start_time = time.time()
+# result, modified_nurse_info = make_monthly_schedule(
+#     team_list=[1],
+#     nurses_list=example_nurse_pk_list,
+#     nurse_info=example_nurse_info,
+#     needed_nurses_shift_by_team=1,
+#     # vacation_info=[],
+#     current_month=10,
+#     current_date=1,
+#     dates=MONTHS_LAST_DAY[10],
+#     start_day_of_this_month=0
+#     )
+# print('디버깅용 딕셔너리')
+# pprint(modified_nurse_info)
+# print()
+# i = 1
 
-for nums in example_nurse_pk_list:
-    print(nums, result[nums])
+# for nums in example_nurse_pk_list:
+#     print(nums, result[nums])
 
-end_time = time.time()
-print('실행 시간')
-print(end_time - start_time)
+# end_time = time.time()
+# print('실행 시간')
+# print(end_time - start_time)

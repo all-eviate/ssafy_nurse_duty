@@ -7,4 +7,5 @@ urlpatterns = [
     path('select/', views.select, name='select'), # OFF_request
     path('<int:pk>/', views.detail, name='detail'), 
     path('dutylist/', views.dutylist, name='dutylist'),
+    path('test/', views.test, name='test'),
 ]
