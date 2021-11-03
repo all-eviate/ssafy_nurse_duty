@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 from .models import Nurse, Team
 from .forms import NurseForm
 from .schedule_maker import make_monthly_schedule
@@ -8,6 +9,12 @@ import statistics
 import datetime
 import holidays
 from pprint import pprint
+=======
+import statistics
+import datetime
+import holidays
+import random
+>>>>>>> master
 
 """
 알고리즘
@@ -231,44 +238,9 @@ def off_request_save(pk):
 페이지 관리
 """
 
-@login_required
-@require_safe
 def index(request):
-    # Team 정보를 불러온다
-    now_year = datetime.date.today().year
-    now_month = datetime.date.today().month
-    start_day, closing_day = calendar_get(now_year, now_month)
-    # index에 달력 만들도록 정보를 넘긴다
-    content = {
-        'start_day': start_day, # 1일의 요일
-        'closing_day': closing_day, # 마지막 날짜
-    }
-    return render(request, 'duties/index.html', content)
 
-@login_required
-@require_http_methods(["GET", "POST"])
-def select(request):
-    if request.method == 'POST':
-        form = NurseForm(request.POST)
-        if form.is_valid(): # 추후 유효성 추가 (선착순 등)
-            form.save()
-            return redirect('duties:index')
-    else:
-        form = NurseForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'duties/select.html', context)
-
-@login_required
-@require_safe
-def detail(request, pk):
-    # 모델로부터 간호사의 근무 조건을 받습니다
-    nurse = Nurse.objects.get(pk=pk)
-    context = {
-        'nurse': nurse,
-    }
-    return render(request, 'duties/detail.html', context)
+    return render(request, 'duties/index.html')
 
 def dutylist(request):
     return render(request, 'duties/dutylist.html')

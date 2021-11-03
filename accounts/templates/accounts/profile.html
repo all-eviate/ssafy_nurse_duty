@@ -8,8 +8,9 @@
   <p></p>
   <p>user: {{ user }}</p>
   <p>name: {{ user.name }}</p>
-  <p>photo: {{ }}</p>
-  <p>emp date: {{ emp.date }}</p>
-  <p>team: {{ user.team }}</p>
+  <p>photo: </p>
+   <img src="{{ user.photo.url }}" alt="userimage">
+  <p>emp date: {{ user.emp_date }}</p>
+  <p>team: {{ user.emp_team }}</p>
 
 {% endblock content %}
