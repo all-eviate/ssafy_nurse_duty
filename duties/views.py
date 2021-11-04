@@ -237,9 +237,10 @@ def next_month(day):
 #새로운 Event의 등록 (모든 유저에 등록이 발생)
 def event(request, event_id=None):
     # duty 전체 정보, 원하는 달, 듀티표 로드
-    team = get_object_or_404(Team, pk=1)
     month = request.POST.get('month')
-    dutys = team.duty.get(month)
+    team = Team.objects.filter(date__month=month)[0]
+    print(team)
+    dutys = team.duty.get('1')
 
     # for문을 이용해 그 달에 넣기
     nurse_num = 1
@@ -247,7 +248,7 @@ def event(request, event_id=None):
         nurse = get_object_or_404(get_user_model(), pk=user_pk)
         user_duty = dutys[user_pk] # ['D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E']
         for idx in range(len(user_duty)):
-            start_time = f"2021-{month}-{idx+1} 00:00:00"
+            start_time = f"2021-{month}-{idx+1}"
             if user_duty[idx] == 'D':
                 title = 'Day'
             elif user_duty[idx] == 'E':
@@ -258,7 +259,9 @@ def event(request, event_id=None):
                 title = 'Off'
             else:
                 title = 'No data'
-            Event.objects.create(user=nurse, start_time=start_time, title=title)
-    
+            try: # 만약 잘못된값이 입력되면 통과한다. (30일까진데 31일값 입력 등)
+                Event.objects.create(user=nurse, start_time=start_time, title=title)
+            except:
+                continue
     return redirect('duties:index')
 
