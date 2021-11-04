@@ -8,6 +8,8 @@ import random
 import calendar
 from .calendar import Calendar
 from django.utils.safestring import mark_safe
+from .models import Team, Event
+from django.contrib.auth import get_user_model
 
 """
 알고리즘
@@ -199,7 +201,7 @@ def index(request):
     next_month_var = next_month(today)
 
     cal = Calendar(today.year, today.month)
-    html_cal = cal.formatmonth(withyear=True, user_pk=request.user.pk)
+    html_cal = cal.formatmonth(withyear=True, user=request.user)
     result_cal = mark_safe(html_cal)
 
     context = {'calendar' : result_cal, 'prev_month' : prev_month_var, 'next_month' : next_month_var}
@@ -231,3 +233,32 @@ def next_month(day):
     next_month = last + datetime.timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
+
+#새로운 Event의 등록 (모든 유저에 등록이 발생)
+def event(request, event_id=None):
+    # duty 전체 정보, 원하는 달, 듀티표 로드
+    team = get_object_or_404(Team, pk=1)
+    month = request.POST.get('month')
+    dutys = team.duty.get(month)
+
+    # for문을 이용해 그 달에 넣기
+    nurse_num = 1
+    for user_pk in range(1, nurse_num+1): # 관계 연결이 아니다보니 이런 방식이여야함
+        nurse = get_object_or_404(get_user_model(), pk=user_pk)
+        user_duty = dutys[user_pk] # ['D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E']
+        for idx in range(len(user_duty)):
+            start_time = f"2021-{month}-{idx+1} 00:00:00"
+            if user_duty[idx] == 'D':
+                title = 'Day'
+            elif user_duty[idx] == 'E':
+                title = 'Evening'
+            elif user_duty[idx] == 'N':
+                title = 'Night'
+            elif user_duty[idx] == 'O':
+                title = 'Off'
+            else:
+                title = 'No data'
+            Event.objects.create(user=nurse, start_time=start_time, title=title)
+    
+    return redirect('duties:index')
+

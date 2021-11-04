@@ -1,5 +1,6 @@
 from calendar import HTMLCalendar
-from .models import Team
+from .models import Event
+
 
 class Calendar(HTMLCalendar):
 	def __init__(self, year=None, month=None):
@@ -27,12 +28,9 @@ class Calendar(HTMLCalendar):
 
 	# '월'을 테이블 태그로 변환
 	# 각 '월'과 '연'으로 이벤트 필터
-	def formatmonth(self, withyear=True, user_pk=1):
-		# events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month)
+	def formatmonth(self, user,withyear=True):
 		# events로 해당사람의 이번달 팀 조회
-		
-
-		
+		events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month, user=user)
 		cal = f'<table class="calendar">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
 		cal += f'{self.formatweekheader()}\n'

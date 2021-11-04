@@ -30,7 +30,12 @@
 
   <section class="container">
     <br>
-    <p>달력이 위치합니다.</p>
+    <form action="{% url 'duties:new' %}" method="POST">
+      {% csrf_token %}
+      <input type="text" name="month" placeholder="달을 입력하세요.">
+      <input type="submit" value="입력">
+    </form>
+
     <div class="outer">
         <a class="btn btn-info left" href="{% url 'duties:index' %}?{{ prev_month }}"><span>이전 달</span> </a>
         <a class="btn btn-info right" href="{% url 'duties:index' %}?{{ next_month }}"><span>다음 달</span> </a>
