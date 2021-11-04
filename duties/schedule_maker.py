@@ -39,11 +39,11 @@ def make_monthly_schedule(
     # 1. 선언
     # 1) 최종 결과값을 저장할 리스트 .
     whole_schedule = []
-    lastteamduty = {nurse.pk: [''] * start_day_of_this_month for nurse in nurses_list}
+    lastteamduty = {nurse.emp_id: [''] * start_day_of_this_month for nurse in nurses_list}
     # for nurse in nurses_list:
     #     for day in range(start_day_of_this_month):
     #         lastteamduty[nurse.pk][day] = ???
-    teamduty = {nurse.pk: [''] * (dates + 1) for nurse in nurses_list}
+    teamduty = {nurse.emp_id: [''] * (dates + 1) for nurse in nurses_list}
 
     yoil = start_day_of_this_month
 
@@ -89,6 +89,31 @@ def make_monthly_schedule(
 
     return whole_schedule_dict, nurse_info
 
+
+def validate(tdlist, dates, year_list, middle_point):
+    valid = True
+    for team in range(1):
+        for day in range(1, dates):
+            worker = 0
+            huim = False
+            sunim = False
+            for i in range(6):
+                if year_list[i] <= middle_point:
+                    huim = True
+                if year_list[i] > middle_point:
+                    sunim = True
+                if tdlist[team][i][day]:
+                    worker += 1
+            if worker != 3:
+                valid = False
+                break
+            if not (huim and sunim):
+                valid = False
+                break
+        if not valid:
+            break
+        
+    return valid
 # 3. 스케쥴 검증
         # is_validate = check_validation(temporary_schedule)
 

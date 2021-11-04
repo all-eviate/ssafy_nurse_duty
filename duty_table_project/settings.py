@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     
     # 3rd-party apps
     'django_extensions',
+    'django_seed',
 
     # Django default apps
     'django.contrib.admin',
