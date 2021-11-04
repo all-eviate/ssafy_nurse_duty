@@ -103,7 +103,7 @@ def test(request):
 
             # print(nurse.pk, result[nurse.pk])
     print(teamsduty)
-    Team.object.create(date=date.today(), duty={"1": teamsduty})
+    Team.objects.create(date=date.today(), duty={"1": teamsduty})
     
     return render(request, 'duties/index.html')
 
