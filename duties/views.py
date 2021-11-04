@@ -7,6 +7,7 @@ from accounts.models import User
 from .schedule_maker import make_monthly_schedule, validate
 import statistics
 import datetime
+from datetime import date
 import holidays
 from pprint import pprint
 
@@ -102,6 +103,8 @@ def test(request):
 
             # print(nurse.pk, result[nurse.pk])
     print(teamsduty)
+    Team.object.create(date=date.today(), duty={"1": teamsduty})
+    
     return render(request, 'duties/index.html')
 
 
