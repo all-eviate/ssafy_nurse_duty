@@ -9,8 +9,11 @@
   <p>user: {{ user }}</p>
   <p>name: {{ user.name }}</p>
   <p>photo: </p>
-   <img src="{{ user.photo.url }}" alt="userimage">
+   {% comment %} <img src="{{ user.photo.url }}" alt="userimage"> {% endcomment %}
   <p>emp date: {{ user.emp_date }}</p>
   <p>team: {{ user.emp_team }}</p>
 
+  <footer class="d-flex justify-content-end">
+    <a class="btn btn-outline-success mx-2" href="{% url 'duties:index' %}" role="button">BACK</a>
+  </footer>
 {% endblock content %}

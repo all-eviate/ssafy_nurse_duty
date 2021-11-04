@@ -23,6 +23,10 @@
           {% csrf_token %}
           <button class="btn btn-outline-danger" type="submit">회원 탈퇴</button>
         </form>
+      {% else %}
+        <p><a class="btn btn-outline-primary mx-2" href="{% url 'accounts:login' %}" role="button">로그인</a></P>
+
+        <p><a class="btn btn-outline-primary ms-2" href="{% url 'accounts:signup' %}" role="button">회원가입</a></P>
       {% endif %}
     </div>
     <hr>
