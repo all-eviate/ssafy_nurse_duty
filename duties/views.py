@@ -158,11 +158,8 @@ def dfs(date, month, age, yoil):
 
 
 """
-회의 전까지 임시로 빼두겠습니다. 
-뺐을때 장점: 기능별로 좀더 세분화 가능하다. 가독성이 좋다.(불확실)
-            알고리즘 담당자가 try-error 하기 편하다.
-       단점: 지저분하고 한번에 코드 기능을 알기 어려울 수 있다. 
-"""
+#### 추가 기능 (off_request) ####
+
 # select 함수(off_request 받아옴)뒤에서 사용
 # 사용자의 pk를 받음. DB Nurse/duties에 dfs 결과 저장 
 def off_request_save(pk):
@@ -189,10 +186,11 @@ def off_request_save(pk):
         nurse_duties[now_month] = result_duty_raw
         nurse.save()
     return 
-
+"""
 """
 페이지 관리
 """
+# 메인 페이지
 @login_required
 def index(request):
     today = get_date(request.GET.get('month'))
@@ -201,32 +199,28 @@ def index(request):
     next_month_var = next_month(today)
 
     cal = Calendar(today.year, today.month)
-    html_cal = cal.formatmonth(withyear=True, user=request.user)
+    html_cal = cal.formatmonth(withyear=True, user=request.user) # 로그인 간호사 듀티표 출력
     result_cal = mark_safe(html_cal)
 
     context = {'calendar' : result_cal, 'prev_month' : prev_month_var, 'next_month' : next_month_var}
 
     return render(request, 'duties/index.html', context)
 
-def dutylist(request):
-    return render(request, 'duties/dutylist.html')
-
-
-#현재 달력을 보고 있는 시점의 시간을 반환
+# 달력 출력 함수
 def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
         return datetime.date(year, month, day=1)
     return datetime.datetime.today()
 
-#현재 달력의 이전 달 URL 반환
+# 달력 출력 함수
 def prev_month(day):
     first = day.replace(day=1)
     prev_month = first - datetime.timedelta(days=1)
     month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
     return month
 
-#현재 달력의 다음 달 URL 반환
+# 달력 출력 함수
 def next_month(day):
     days_in_month = calendar.monthrange(day.year, day.month)[1]
     last = day.replace(day=days_in_month)
@@ -234,20 +228,21 @@ def next_month(day):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
-#새로운 Event의 등록 (모든 유저에 등록이 발생)
+# Calendar 모델 관리
+@require_POST
 def event(request, event_id=None):
-    # duty 전체 정보, 원하는 달, 듀티표 로드
+    # duty 정보, 해당 달 로드
     month = request.POST.get('month')
-    team = Team.objects.filter(date__month=month)[0]
-    print(team)
-    dutys = team.duty.get('1')
+    team = Team.objects.filter(date__month=month).last() # 입력 달의 가장 최신 객체
+    dutys = team.duty.get('1') # key의 경우 1로 약속
 
-    # for문을 이용해 그 달에 넣기
-    nurse_num = 1
-    for user_pk in range(1, nurse_num+1): # 관계 연결이 아니다보니 이런 방식이여야함
+    # 모델 입력
+    nurse_num = get_user_model().objects.all().count()
+    print(nurse_num)
+    for user_pk in range(1, nurse_num+1): 
         nurse = get_object_or_404(get_user_model(), pk=user_pk)
-        user_duty = dutys[user_pk] # ['D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E', 'N', 'O', 'D', 'E']
-        for idx in range(len(user_duty)):
+        user_duty = dutys[user_pk]
+        for idx in range(1, len(user_duty)+1): # ['','D','O','E',...]
             start_time = f"2021-{month}-{idx+1}"
             if user_duty[idx] == 'D':
                 title = 'Day'
@@ -259,9 +254,15 @@ def event(request, event_id=None):
                 title = 'Off'
             else:
                 title = 'No data'
-            try: # 만약 잘못된값이 입력되면 통과한다. (30일까진데 31일값 입력 등)
+            try: # 그 달의 일수보다 많은 일수가 들어가는 경우 pass
                 Event.objects.create(user=nurse, start_time=start_time, title=title)
             except:
                 continue
     return redirect('duties:index')
+
+
+# 추가 기능(off_request)
+def dutylist(request):
+    return render(request, 'duties/dutylist.html')
+
 
