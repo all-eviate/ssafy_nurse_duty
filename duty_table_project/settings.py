@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'duties',
     
     # 3rd-party apps
+    'bootstrap5',
     'django_extensions',
 
     # Django default apps
