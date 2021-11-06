@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
   <header>
@@ -32,7 +33,24 @@
     <hr>
   </header>
 
-  <section>
-    <p>달력이 위치합니다.</p>
+  <section class="container">
+    <br>
+    {% if user.emp_grade == "leader" %}
+      <div class="container">
+        <form action="{% url 'duties:new' %}" method="POST" class="row justify-content-start ">
+          {% csrf_token %}
+          <input type="text" name="month" placeholder="달을 입력하세요." class="col-4 mx-2">
+          <input type="submit" value="저장" class="col-1 mx-1">
+        </form>
+      </div>
+    {% endif %}
+    <br>
+    <div class="outer">
+        <a class="btn btn-outline-danger left" href="{% url 'duties:index' %}?{{ prev_month }}"><span>이전 달</span> </a>
+        <a class="btn btn-outline-danger right" href="{% url 'duties:index' %}?{{ next_month }}"><span>다음 달</span> </a>
+    </div>
+    {{calendar}}
+    <br>
+    
   </section>
 {% endblock content %}
