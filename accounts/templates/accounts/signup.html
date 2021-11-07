@@ -4,18 +4,18 @@
 
 {% block content %}
   <header>
-    <p class="display-6 text-center">Signup Page</p>
-    <hr>
+    <p class="display-6 text-center fw-bold title">Signup Page</p>
   </header>
+
+  <hr class="my-5">
 
   <section class="mb-5">
     <form action="{% url 'accounts:signup' %}" method="POST">
       {% csrf_token %}
-      {% comment %} {{ form.as_p }} {% endcomment %}
       {% bootstrap_form form %}
       <div class="d-flex justify-content-end">
-        <a class="btn btn-outline-success mx-2" href="{% url 'duties:index' %}" role="button">BACK</a>
-        <button class="btn btn-outline-primary ms-2" type="submit">확인</button>
+        <a id="update-btn" class="btn btn-outline-success mx-2" href="{% url 'duties:index' %}" role="button">BACK</a>
+        <button id="update-btn" class="btn btn-outline-primary fw-bold" type="submit">확인</button>
       </div>
     </form>
   </section>

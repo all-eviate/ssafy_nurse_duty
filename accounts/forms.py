@@ -6,6 +6,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
@@ -21,11 +22,13 @@ class CustomUserCreationForm(UserCreationForm):
             'emp_grade' : forms.Select(choices=GRADE_CHOICES)
         }
 
+
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
         fields = ('name', 'photo', 'emp_team',)
+
 
 class CustomPasswordChangeForm(PasswordChangeForm):
         

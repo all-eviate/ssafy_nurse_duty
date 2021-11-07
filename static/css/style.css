@@ -6,13 +6,13 @@
 } */
 
 .calendar{
-    width: 70vw;
+    width: 100%;
     font-size: 1rem;
     margin : auto;
 	background: rgb(255, 245, 228);
-	border-radius: 0 0 1em 1em;
-	-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2), 10px 10px 10px 10px #fff;
-	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2), 10px 10px 10px 10px #fff;
+	/* border-radius: 1em 1em 1em 1em; */
+	/* -webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2), 10px 10px 10px 10px #fff;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2), 10px 10px 10px 10px #fff; */
 	color: #555;
     text-align : center;
 }
@@ -97,7 +97,7 @@
 a:visited { color: blue; text-decoration: none;}
 a:hover { color: red; text-decoration: none;} */
 
-.left {
+/* .left {
     float : left;
     margin : 10px;
 }
@@ -105,7 +105,7 @@ a:hover { color: red; text-decoration: none;} */
 .right {
     float : right;
     margin : 10px;
-}
+} */
 
 .form {
     margin: auto;
@@ -128,25 +128,26 @@ a:hover { color: red; text-decoration: none;} */
   }
   
   
-  #update-sibling {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-  
-  }
-  
-  #update-btn {
-    border-color: #fc7674;
-    color: #fc7674;
-  }
+#update-sibling {
+position: absolute;
+bottom: 20px;
+right: 20px;
 
+}
 
-/* 000 */
-.title {
-    color: rgb(200, 132, 145);
+#update-btn {
+border-color: #fc7674;
+color: #fc7674;
 }
 
 #account-btn {
-    border-color: rgb(131, 182, 177);
-    color: rgb(131, 182, 177);
-  }
+border-color: rgb(131, 182, 177);
+color: rgb(131, 182, 177);
+}
+
+
+/* final */
+
+.title {
+    color: rgb(200, 132, 145);
+}

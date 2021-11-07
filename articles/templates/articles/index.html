@@ -5,15 +5,15 @@
   {# header #}
   <header>
     {# title #}
-    <p class="display-5 text-center" sytle="color: rgb(200, 132, 145);">속닥속닥</p>
+    <p class="display-5 text-center fw-bold title">속닥속닥</p>
 
     {# nav buttons #}
     <div class="d-flex justify-content-end">
-      <a href="{% url 'duties:index' %}" role="button" class="mx-2 btn btn-outline-dark">
+      <a id="update-btn" href="{% url 'duties:index' %}" role="button" class="mx-2 btn btn-outline-dark fw-bold">
         <i class="me-1 bi bi-calendar-check"></i>
         <span>캘린더 보기</span>
       </a>
-      <a href="{% url 'articles:create' %}" role="button" class="btn btn-outline-primary">
+      <a id="account-btn" href="{% url 'articles:create' %}" role="button" class="btn btn-outline-primary fw-bold">
         <i class="me-1 bi bi-pen"></i>
         <span>한마디 하기</span>
       </a>

@@ -3,7 +3,7 @@
 {% block content %}
   <header>
     {# title #}
-    <p class="display-5 text-center">속닥속닥</p>
+    <p class="display-5 text-center fw-bold title">속닥속닥</p>
 
     {# nav buttons #}
     <div class="d-flex justify-content-between align-items-center">
@@ -22,13 +22,13 @@
 
       <div class="d-flex justify-content-end">
         {% if user == article.user %}
-          <a href="{% url 'articles:update' article.pk %}" role="button" class="btn btn-outline-success">말조심하기</a>
+          <a id="account-btn" href="{% url 'articles:update' article.pk %}" role="button" class="btn btn-outline-success fw-bold">말조심하기</a>
           <form action="{% url 'articles:delete' article.pk %}" method="POST">
             {% csrf_token %}
-            <button class="mx-2 btn btn-outline-danger" type="submit">말 주워 담기</button>
+            <button id="account-btn" class="mx-2 btn btn-outline-danger fw-bold" type="submit">말 주워 담기</button>
           </form>
         {% endif %}
-        <a href="{% url 'articles:index' %}" role="button" class="btn btn-outline-dark">뒤로 가기</a>
+        <a id="update-btn" href="{% url 'articles:index' %}" role="button" class="btn btn-outline-dark fw-bold">뒤로 가기</a>
       </div>
     </div>
   </header>
@@ -82,7 +82,7 @@
             {{ comment_form.content.errors }}
             {{ comment_form.content }}
           </p>
-          <button class="col btn btn-outline-success" type="submit">대꾸하기</button>
+          <button id="account-btn" class="col btn btn-outline-success fw-bold" type="submit">대꾸하기</button>
         </div>
       </form>
     </div>
