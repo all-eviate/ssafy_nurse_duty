@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext, gettext_lazy as _
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -25,3 +26,11 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
         fields = ('name', 'photo', 'emp_team',)
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+        
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+    )

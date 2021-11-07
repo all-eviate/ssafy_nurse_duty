@@ -6,7 +6,7 @@ from django.contrib.auth import (
 )
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomPasswordChangeForm
 
 # SIGN UP: 회원가입
 @require_http_methods(['GET', 'POST'])
@@ -59,13 +59,13 @@ def update(request):
 @require_http_methods(['GET', 'POST'])
 def change_password(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
+        form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
             return redirect('duties:index')
     else:
-        form = PasswordChangeForm(request.user)
+        form = CustomPasswordChangeForm(request.user)
     context = {
         'form': form,
     }
