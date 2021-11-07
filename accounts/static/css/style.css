@@ -1,0 +1,16 @@
+/* 프로필 페이지 */
+#update-parent {
+  position: relative;
+}
+
+
+#update-sibling {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+#update-btn {
+  border-color: #fc7674;
+  color: #d13f38;
+}
