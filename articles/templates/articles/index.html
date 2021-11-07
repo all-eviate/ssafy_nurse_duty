@@ -5,7 +5,7 @@
   {# header #}
   <header>
     {# title #}
-    <p class="display-5 text-center">속닥속닥</p>
+    <p class="display-5 text-center" sytle="color: rgb(200, 132, 145);">속닥속닥</p>
 
     {# nav buttons #}
     <div class="d-flex justify-content-end">
@@ -71,33 +71,4 @@
       <img src="{% static 'images/ads.sample.ssafy_textbook.jpeg' %}" alt="ads sample" class="img-fluid">
     </section>
   </section>
-
-    
-
-    {% comment %}
-    
-
-
-<i class="bi bi-emoji-smile"></i>
-<i class="bi bi-emoji-angry"></i>
-<i class="bi bi-hand-thumbs-up"></i>
-<i class="bi bi-hand-thumbs-down"></i>
-
-      <div class="d-flex justify-content-end">
-
-
-        {# like counts #}
-        <button id="like-count-{{ article.pk }}" class="btn btn-outline-dark ms-2" disabled>{{ article.like_users.all|length }}</button>
-      </div>
-
-      <hr>
-    {% endfor %}
-  </section>
-
-  <footer class="mb-5">
-  </footer> {% endcomment %}
 {% endblock content %}
-{% comment %} 
-{% block script %}
-  
-{% endblock script %} {% endcomment %}

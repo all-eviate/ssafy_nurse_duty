@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'articles',
     
     # 3rd-party apps
-    # 'bootstrap5',
+    'bootstrap5',
     'django_extensions',
 
     # Django default apps

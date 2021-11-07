@@ -9,7 +9,7 @@
     width: 70vw;
     font-size: 1rem;
     margin : auto;
-	background: #fff;
+	background: rgb(255, 245, 228);
 	border-radius: 0 0 1em 1em;
 	-webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2), 10px 10px 10px 10px #fff;
 	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .2), 10px 10px 10px 10px #fff;
@@ -137,5 +137,16 @@ a:hover { color: red; text-decoration: none;} */
   
   #update-btn {
     border-color: #fc7674;
-    color: #d13f38;
+    color: #fc7674;
+  }
+
+
+/* 000 */
+.title {
+    color: rgb(200, 132, 145);
+}
+
+#account-btn {
+    border-color: rgb(131, 182, 177);
+    color: rgb(131, 182, 177);
   }

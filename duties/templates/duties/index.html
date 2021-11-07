@@ -3,19 +3,19 @@
 
 {% block content %}
   <header>
-    <p class="display-6 text-center">Index Page</p>
+    <p class="display-6 fw-bold text-center title">Index Page</p>
 
     <div class="d-flex justify-content-end">
       {% if request.user.is_authenticated %}
-        <p><a class="btn btn-outline-success mx-2" href="{% url 'articles:index' %}" role="button">속닥속닥</a></P>
+        <p><a id="update-btn" class="btn btn-outline-success mx-2" href="{% url 'articles:index' %}" role="button">속닥속닥</a></P>
 
-        <p><a class="btn btn-outline-success mx-2" href="{% url 'accounts:profile' user.pk %}" role="button">프로필</a></P>
+        <p><a id="update-btn" class="btn btn-outline-success mx-2" href="{% url 'accounts:profile' user.pk %}" role="button">프로필</a></P>
 
         <p><a class="btn btn-outline-success mx-2" href="{% url 'accounts:update' %}" role="button">회원정보 수정</a></P>
 
         <form action="{% url 'accounts:logout' %}" method="POST" class="mx-2">
           {% csrf_token %}
-          <button class="btn btn-outline-danger" type="submit">로그아웃</button>
+          <button id="account-btn" class="btn btn-outline-danger" type="submit">로그아웃</button>
         </form>
 
         <form action="{% url 'accounts:delete' %}" method="POST" class="ms-2">

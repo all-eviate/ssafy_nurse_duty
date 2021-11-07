@@ -264,5 +264,3 @@ def event(request, event_id=None):
 # 추가 기능(off_request)
 def dutylist(request):
     return render(request, 'duties/dutylist.html')
-
-
