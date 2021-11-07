@@ -10,6 +10,4 @@ urlpatterns = [
     path('login/', views.login, name='login'),  # 로그인
     path('logout/', views.logout, name='logout'),  # 로그아웃
     path('<int:pk>/', views.profile, name='profile'),  # 프로필
-
-    path('test/', views.test, name='test'),  # 테스트
 ]

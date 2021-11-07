@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {# header #}
+  <header>
+    {# title #}
+    <p class="display-5 text-center">한마디 수정하기</p>
+  </header>
+
+  <hr class="mt-4 mb-5">
+  
+  {# body #}
+  <section>
+    <form action="{% url 'articles:update' article.pk %}" method="POST">
+      {% csrf_token %}
+        <p class="mb-4">
+          {{ form.category.errors }}
+          {{ form.category.label_tag }}
+          {{ form.category }}
+        </p>
+        <p class="mb-4">
+          {{ form.title.errors }}
+          {{ form.title.label_tag }}
+          {{ form.title }}
+        </p>
+        <p class="mb-4">
+          {{ form.content.errors }}
+          {{ form.content.label_tag }}
+          {{ form.content }}
+        </p>
+
+      {# nav buttons #}
+      <div class="d-flex justify-content-end">
+        <a href="{% url 'articles:index' %}" role="button" class="mx-2 btn btn-outline-dark">뒤로 가기</a>
+        <button class="btn btn-outline-success" type="submit">다시 투척</button>
+      </div>
+    </form>
+  </section>
+{% endblock content %}

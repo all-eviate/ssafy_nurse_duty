@@ -6,9 +6,7 @@
 
     <div class="d-flex justify-content-end">
       {% if request.user.is_authenticated %}
-        {% if user.emp_grade == 'leader' %}
-          <p><a class="btn btn-outline-success mx-2" href="{% url 'accounts:test' %}" role="button">테스트</a></P>
-        {% endif %}
+        <p><a class="btn btn-outline-success mx-2" href="{% url 'articles:index' %}" role="button">속닥속닥</a></P>
 
         <p><a class="btn btn-outline-success mx-2" href="{% url 'accounts:profile' user.pk %}" role="button">프로필</a></P>
 

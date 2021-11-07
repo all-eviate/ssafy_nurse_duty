@@ -108,8 +108,3 @@ def profile(request, pk):
         'worker': worker,
     }
     return render(request, 'accounts/profile.html', context)
-
-
-# test
-def test(request):
-    return render(request, 'accounts/test.html')
