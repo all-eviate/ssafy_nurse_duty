@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load bootstrap5 %}
+
 {% block content %}
   <header>
     <p class="display-6 text-center">Login Page</p>
@@ -16,7 +18,8 @@
   <section>
     <form action="{% url 'accounts:login' %}" method="POST">
       {% csrf_token %}
-      {{ form.as_p }}
+      {% comment %} {{ form.as_p }} {% endcomment %}
+      {% bootstrap_form form %}
       <div class="d-flex justify-content-end">
         <button class="btn btn-outline-primary ms-2" type="submit">확인</button>
       </div>
