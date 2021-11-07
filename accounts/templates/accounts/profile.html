@@ -22,11 +22,31 @@
       
       <div class="col-md-7" id="update-parent">
         <div class="card-body p-5">
-          <p class="card-title fs-3 fw-bold mb-5">{{ user.name }}의 Profile</p>
-          <p class="fs-5">{{ user.emp_team }}팀</p>
-          <p class="fs-5">사원번호: {{ user.emp_id }}</p>
-          <p class="fs-5">입사년도: {{ user.emp_date }}</p>
-          <p class="fs-5">직급: {{ user.emp_grade }}</p>
+          <p class="card-title fs-3 fw-bold mb-3">{{ user.name }}의 Profile</p>
+          <div class="pt-5">
+            <div class="d-inline-flex">
+              <i class="fas fa-check mx-1 mt-1 d-inline-flex">
+              </i>
+              <h5 class="mb-3 mx-3">{{ user.emp_team }} 팀</h5>
+            </div>
+            <br>
+            <div class="d-inline-flex">
+              <i class="fas fa-check mx-1 mt-1">
+              </i>
+              <h5 class="mb-3 mx-3">사원번호: {{ user.emp_id }}</h5>
+            </div>
+            <br>
+            <div class="d-inline-flex">
+              <i class="fas fa-check mx-1 mt-1">
+              </i>
+              <h5 class="mb-3 mx-3">입사일: {{ user.emp_date }}</h5>
+            </div>
+            <div class="d-inline-flex">
+              <i class="fas fa-check mx-1 mt-1">
+              </i>
+              <h5 class="mb-3 mx-3">직급: {{ user.emp_grade }}</h5>
+            </div>
+          </div>
         </div>
       </div>
     </div>
