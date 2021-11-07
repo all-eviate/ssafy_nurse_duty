@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <header>
+    {# title #}
+    <p class="display-5 text-center">속닥속닥</p>
+
+    {# nav buttons #}
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        Category >
+        {% if article.category == 'wk' %}
+          <span class="badge bg-primary">근무 이야기</span>
+        {% elif article.category == 'lf' %}
+          <span class="badge bg-success">일상 이야기</span>
+        {% elif article.category == 'fn' %}
+          <span class="badge bg-danger">머니 이야기</span>
+        {% elif article.category == 'qt' %}
+          <span class="badge bg-warning">질문 이야기</span>
+        {% endif %}
+      </div>
+
+      <div class="d-flex justify-content-end">
+        {% if user == article.user %}
+          <a href="{% url 'articles:update' article.pk %}" role="button" class="btn btn-outline-success">말조심하기</a>
+          <form action="{% url 'articles:delete' article.pk %}" method="POST">
+            {% csrf_token %}
+            <button class="mx-2 btn btn-outline-danger" type="submit">말 주워 담기</button>
+          </form>
+        {% endif %}
+        <a href="{% url 'articles:index' %}" role="button" class="btn btn-outline-dark">뒤로 가기</a>
+      </div>
+    </div>
+  </header>
+
+  <hr class="mb-5">
+
+  <section class="container mb-5">
+    <div class="mb-4">
+      <div class="d-flex align-items-center mb-1">
+        <p class="mb-0 me-2 fs-3 fw-bold">{{ article.title }}</p>
+
+        {# like button #}
+        <form id="form-like" data-article-id="{{ article.pk }}" class="d-inline">
+          {% csrf_token %}
+          {% if user in article.like_users.all %}
+            <button class="btn btn-outline-danger" type="submit">
+              <i id="img-like-{{ article.pk }}" class="bi bi-heart text-danger"></i>
+            </button>
+          {% else %}
+            <button class="btn btn-outline-danger" type="submit">
+              <i id="img-like-{{ article.pk }}" class="bi bi-heart-fill text-danger"></i>
+            </button>
+          {% endif %}
+        </form>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-0 fw-light">{{ article.updated_at|date:"Y. m. d. H:i" }}</p>
+        <p class="mb-0">
+          {# like img and count #}
+          <span><i class="me-1 bi bi-heart text-danger"></i></span>
+          <span id="count-like-{{ article.pk }}">{{ article.like_users.all|length }}</span>
+
+          {# comment img and count #}
+          <span><i class="ms-3 me-1 bi bi-chat-left-dots"></i></span>
+          <span id="comment-count-title">{{ article.comment_set.all|length }}</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="p-3 border border-2 rounded" style="margin-bottom: 100px;">
+      {{ article.content }}
+    </div>
+
+    <div class="mb-5">
+      <p>댓글: <span id="comment-count-body">{{ article.comment_set.all|length }}</span></p>
+      <form action="{% url 'articles:create_comments' article.pk %}" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <p class="mb-0 col-10">
+            {{ comment_form.content.errors }}
+            {{ comment_form.content }}
+          </p>
+          <button class="col btn btn-outline-success" type="submit">대꾸하기</button>
+        </div>
+      </form>
+    </div>
+
+    <hr>
+
+    <div>
+      {% for comment in comments %}
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <p class="ms-2 mb-0">
+            <span><i class="bi bi-emoji-smile"></i> 익명의 {{ fake_user_id|random }}번째 누군가:</span> 
+            <span class="fw-bold">{{ comment }}</span>
+          </p>
+
+          {% if user == comment.user %}
+            <form action="{% url 'articles:delete_comments' article.pk comment.pk %}" method="POST" class="d-inline">
+              {% csrf_token %}
+              <button class="btn btn-outline-danger" type="submit"><i class="bi bi-x-lg"></i></button>
+            </form>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock content %}
+
+{% block script %}
+  <script>
+    const formLike = document.querySelector('#form-like')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    formLike.addEventListener('submit', function (event) {
+      event.preventDefault()
+
+      const articleId = event.target.dataset.articleId
+
+      axios({
+        method: 'post',
+        url: `http://127.0.0.1:8000/articles/${articleId}/likes/`,
+        headers: {'X-CSRFToken': csrftoken}
+      })
+        .then(response => {
+          const {is_like, count_like} = response.data
+
+          const imgLike = document.querySelector(`#img-like-${articleId}`)
+          const countLike = document.querySelector(`#count-like-${articleId}`)
+
+          is_like ? imgLike.setAttribute('class', 'bi bi-heart-fill text-danger') : imgLike.setAttribute('class', 'bi bi-heart text-danger')
+          countLike.innerText = count_like
+        })
+        .catch(error => {
+          console.log(error.response)
+          if (error.response.status === 401) {
+            console.log(window.location.href)
+            window.location.href = `http://127.0.0.1:8000/accounts/login/`
+          }
+        })
+    })
+  </script>
+{% endblock script %}

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # local apps
     'accounts',
     'duties',
+    'articles',
     
     # 3rd-party apps
     # 'bootstrap5',

@@ -13,7 +13,19 @@ class Calendar(HTMLCalendar):
 		events_per_day = events.filter(start_time__day=day)
 		d = ''
 		for event in events_per_day:
-			d += f'<li> {event.get_html_url} </li>'
+			event_type = ''
+			if event.title == "Day":
+				event_type = 'text-primary'
+			elif event.title == 'Evening':
+				event_type = 'text-warning'
+			elif event.title == 'Night':
+				event_type = 'text-danger'
+			elif event.title == 'Off':
+				event_type = 'text-success'
+			else:
+				event_type = 'text-dark'
+
+			d += f'<li class="{event_type}"> {event} </li>'
 
 		if day != 0:
 			return f"<td><span class='date'>{day}</span><ul class='event_line'> {d} </ul></td>"
