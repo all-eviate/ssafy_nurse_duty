@@ -7,4 +7,5 @@ urlpatterns = [
     path('new/', views.event, name="new"), # 달력 리뉴얼
     path('dutylist/', views.dutylist, name='dutylist'),
     path('edit/<int:event_id>', views.event, name="edit"),
+    path('test/', views.test, name='test'),
 ]

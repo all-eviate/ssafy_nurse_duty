@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # 3rd-party apps
     'bootstrap5',
     'django_extensions',
+    'django_seed',
 
     # Django default apps
     'django.contrib.admin',
